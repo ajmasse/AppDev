@@ -126,5 +126,9 @@ ons-carousel {
 }
 
 .head-icon h1 {
-  padding: 175px 0px 0px 0px;
+  padding: 120px 0px 0px 0px;
+}
+
+.head-icon p {
+  padding-bottom: 15px;
 }
