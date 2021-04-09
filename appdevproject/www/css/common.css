@@ -1,0 +1,130 @@
+/********** INDEX PAGE CLASSES ********/
+
+.game-list-bottom-toolbar {
+  background: rgb(61, 61, 61);
+}
+
+.game-list-bottom-toolbar button {
+  background-color: rgb(255, 255, 255);
+}
+
+.game-list-bottom-toolbar {
+  width: 100%;
+  min-height: 50px;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.content-item {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-link {
+  min-width: 120px;
+  text-align: center;
+}
+
+/********** EXAMPLE 2 CLASSES ********/
+h3.section-break {
+  color: #a8c980;
+  margin-top: 20px;
+}
+
+.restaurant-list-item {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-areas: "thumb copy btn";
+}
+
+.restaurant-list-left {
+  grid-area: thumb;
+}
+
+.restaurant-list-mid {
+  grid-area: copy;
+  padding-left: 5px;
+}
+
+.restaurant-list-right {
+  grid-area: btn;
+  align-self: center;
+  justify-self: center;
+}
+
+img.restaurant-list-thumb {
+  max-width: 100%;
+}
+
+.restaurant-list-heading {
+  font-size: 1.2em;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.restaurant-list-subhead {
+  font-size: 1em;
+}
+
+ons-carousel {
+  height: calc(300 * (100vw / 500));
+  margin: 15px 0px;
+}
+
+.restaurant-caro-image {
+  width: 100vw;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-field-full {
+  width: 100%;
+  padding: 25px 0px 25px 0px;
+}
+
+.interest-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 75px;
+  grid-row-gap: 15px;
+}
+
+.bottom-toolbar-order {
+  min-height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bottom-toolbar-left {
+  flex-grow: 1;
+  padding-left: 15px;
+}
+
+.bottom-toolbar-right {
+  padding: 15px;
+}
+
+.dialog-em {
+  font-weight: bold;
+  color: #a8c980;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.head-icon img {
+  width: 100%;
+  padding: 50px 0px 100px 0px;
+  margin: auto;
+}
+
+.head-icon h1 {
+  padding: 175px 0px 0px 0px;
+}

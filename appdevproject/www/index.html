@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+
+        <link rel="stylesheet" href="./lib/onsenui/css/onsenui.css">
+        <link rel="stylesheet" href="./lib/onsenui/css/onsen-css-components.min.css">
+        <script src="./lib/onsenui/js/onsenui.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+    </head>
+
+    <body>
+        
+        <ons-page>
+            <ons-toolbar>
+                <div class="center">Streaming App</div>                
+            </ons-toolbar>         
+
+            <div class="head-icon center">
+                <h1></h1>
+                <img src="./img/restaurants/logo.png"></div>
+            </div>
+            
+            <div class="content-item">
+                <ons-button class="btn-link" data-src="landing.html" onclick="navPage(this)">Get Started</ons-button>
+            </div>           
+        </ons-page>
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+        <script>
+
+            function navPage(target){
+                window.location = event.target.getAttribute('data-src');
+            }            
+
+        </script>
+        
+    </body>
+</html>

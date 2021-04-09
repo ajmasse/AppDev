@@ -1,0 +1,400 @@
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+
+        <link rel="stylesheet" href="./lib/onsenui/css/onsenui.css">        
+        <link rel="stylesheet" href="./lib/onsenui/css/onsen-css-components.css">
+        <script src="./lib/onsenui/js/onsenui.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+    </head>
+    <body>
+
+        <ons-navigator id="myNavigator" page="restaurant-list-temp"></ons-navigator>        
+
+        <!-- RESTAURANT LIST -->
+        <template id="restaurant-list-temp">
+            <ons-page id="restaurant-list-page">
+                <ons-toolbar>
+                    <div class="center">Restaurants</div>
+                    <div class="right">
+                        <ons-toolbar-button id="home-button"> 
+                            <ons-icon icon="md-home"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                </ons-toolbar>         
+            
+                <!-- RESTAURANT LIST -->
+                <ons-list id="restaurant-list"></ons-list>
+            </ons-page>
+        </template>
+
+        <!-- RESTAURANT DETAILS -->
+        <template id="restaurant-detail-temp">
+            <ons-page id="restaurant-detail-page">
+
+                <ons-toolbar>
+                    <div class="left"><ons-back-button>Back</ons-back-button></div>
+                    <div class="center">Restaurant Menu</div>
+                </ons-toolbar>
+
+                <ons-card>                    
+                    <div class="title"></div>
+
+                    <div class="content">
+
+                        <div id="restaurantShortDesc"></div>
+
+                        <ons-carousel id="restaurant-detail-carousel" swipeable auto-scroll overscrollable></ons-carousel>                        
+                        <h3 class="section-break">Served Dietary Restrictions</h3>
+                        
+                        <ul id="dietaryList"></ul><!-- DIETARY LIST -->
+
+                        <h3 class="section-break">Description</h3>
+
+                        <div id="longRestaurantDesc"></div> <!-- RESTAURANT DESCRIPTION -->
+                        
+                    </div>
+
+                       <ons-list> <!-- MENU LIST -->
+
+                        <h3 class="section-break">Menu</h3>
+
+                        <ons-list-item tappable> <!-- ITEM 1 -->
+                          <label class="left">
+                            <ons-checkbox input-id="check-1"></ons-checkbox>
+                          </label>
+                          <label for="check-1" class="center">
+                            Pizza
+                          </label>
+                          <label for="check-1" class="right">
+                            15.95
+                          </label>
+                        </ons-list-item>
+                        
+                        <ons-list-item tappable> <!-- ITEM 2 -->
+                          <label class="left">
+                            <ons-checkbox input-id="check-2"></ons-checkbox>
+                          </label>
+                          <label for="check-2" class="center">
+                            Pasta
+                          </label>
+                          <label for="check-2" class="right">
+                            11.95
+                          </label>
+                        </ons-list-item>
+
+                        <ons-list-item tappable> <!-- ITEM 3 -->
+                          <label class="left">
+                            <ons-checkbox input-id="check-3"></ons-checkbox>
+                          </label>
+                          <label for="check-3" class="center">
+                            Burger
+                          </label>
+                          <label for="check-3" class="right">
+                            13.95
+                          </label>
+                        </ons-list-item>
+
+                        <ons-list-item tappable> <!-- ITEM 4 -->
+                          <label class="left">
+                            <ons-checkbox input-id="check-4"></ons-checkbox>
+                          </label>
+                          <label for="check-4" class="center">
+                            Salad
+                          </label>
+                          <label for="check-4" class="right">
+                            11.95
+                          </label>
+                        </ons-list-item>
+
+                        <ons-list-item tappable> <!-- ITEM 5 -->
+                          <label class="left">
+                            <ons-checkbox input-id="check-5"></ons-checkbox>
+                          </label>
+                          <label for="check-5" class="center">
+                            Steak
+                          </label>
+                          <label for="check-5" class="right">
+                            36.95
+                          </label>
+                        </ons-list-item>
+
+                        <ons-list-item tappable> <!-- ITEM 6 -->
+                          <label class="left">
+                            <ons-checkbox input-id="check-6"></ons-checkbox>
+                          </label>
+                          <label for="check-6" class="center">
+                            Fish
+                          </label>
+                          <label for="check-6" class="right">
+                            28.95
+                          </label>
+                        </ons-list-item>
+                      
+                      </ons-list>
+
+                </ons-card>      
+
+                <ons-button id="order-btn" modifier="large">Checkout</ons-button> <!-- CHECKOUT BUTTON -->
+
+            </ons-page>
+        </template>
+
+        <!-- RESTAURANT ORDER REVIEW/DELIVERY INFORMATION -->
+        <template id="restaurant-order-temp">
+            <ons-page id="restaurant-order-page">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-back-button></ons-back-button>
+                    </div>
+                    <div class="center">Enter Delivery Information</div>
+                </ons-toolbar>
+
+                <ons-card>                    
+                    <div class="title">   
+                    </div>
+
+                    <div class="content">
+                        <h3 class="section-break">Your Information</h3>
+
+                        <div>
+                            <label for="fullName">Name</label>
+                            <div><ons-input input-id="fullName" class="form-field-full" modifier="underbar" placeholder="Full Name"></ons-input></div>
+                        </div>
+
+                        <div>
+                            <label for="email">Email Address</label>
+                            <div><ons-input input-id="customerEmail" class="form-field-full" modifier="underbar" placeholder="Email"></ons-input></div>
+                        </div>
+
+                        <div>
+                            <label for="address">Delivery Address</label>
+                            <div><ons-input input-id="customerAddress" class="form-field-full" modifier="underbar" placeholder="Address"></ons-input></div>
+                        </div>
+
+                        <ons-bottom-toolbar class="bottom-toolbar-order"> <!-- TERMS OF SERVICE CHECKBOX -->
+                            <div class="bottom-toolbar-left">
+                                <ons-checkbox input-id="agreeTerms" onchange="toggleSubmit(this)"></ons-checkbox>
+                                <label for="agreeTerms" class="center"> I agree to the terms of service</label>
+                    </div>
+                    
+                    <div class="bottom-toolbar-right"> <!-- SUBMIT/PLACE ORDER -->
+                        <ons-button id="submitBtn" disabled onclick="submitOrder()">
+                            Place Order
+                        </ons-button>
+                    </div>                    
+                </ons-bottom-toolbar>
+
+            </ons-page>
+        </template>
+
+        <!-- ORDER CONFIRMATION  -->
+        <template id="order-confirm-temp">
+            <ons-dialog id="order-confirm-dialog">
+              <div style="text-align: center; padding: 10px;">
+                
+                <h3> Thank you! </h3>
+
+                <p> Your order from <span id="confirm-restaurant"> </span> has been recieved. </p>
+
+                <p>If you do not recieve a confirmation email within 15 minutes please contact us.</p>
+          
+                <p><ons-button onclick="navToMain()">Continue</ons-button></p>
+              
+              </div>
+            </ons-dialog>
+        </template>
+
+        <!-- SPINNER -->        
+        <ons-modal id="spinner-modal">
+            <div style="margin: auto;">
+                <ons-icon icon="md-spinner" size="100px" spin></ons-icon>              
+            </div>
+        </ons-modal>
+        
+        <!-- SCRIPTS -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="./js/restaurantdata.js"></script>
+            
+        <script>
+            
+            document.addEventListener('init', function(event) { // Load restaurant list
+
+                var page = event.target;
+
+                if (page.id === 'restaurant-list-page') { 
+                    
+                    page.querySelector('#home-button').onclick = function() {
+                        window.location = './index.html';
+                    }; 
+
+                    loadRestaurantsList(page);
+                }
+
+                if (page.id === 'restaurant-detail-page') { 
+                    loadRestaurantDetail(page);                    
+                }
+
+                if (page.id === 'restaurant-order-page'){ // Cancel order if back button is clicked
+                    
+                    loadRestaurantOrderData(page);
+
+                    page.querySelector('ons-back-button').onClick = function(event) {
+
+                        ons.notification.confirm('Do you want to cancel this order?', {buttonLabels:['No','Yes']})
+                            .then(function(retIndex){
+                                if(retIndex === 1){
+                                    document.querySelector('ons-navigator').popPage();
+                                }                                    
+                            });                        
+                    };
+                }
+            });            
+            
+            function pushRestaurantDetail(rID){
+
+                var currRestaurant = restaurantSet[Number.parseInt(rID)];
+                
+                document.querySelector('#myNavigator').pushPage('restaurant-detail-temp', {data: {cRestaurant: currRestaurant}});
+            }
+
+            function pushRestaurantOrder(rID){
+
+                var currRestaurant = restaurantSet[Number.parseInt(rID)];
+                             
+                document.querySelector('#myNavigator').pushPage('restaurant-order-temp', {data: {cRestaurant: currRestaurant}});
+            }
+
+            function toggleSubmit(target){ // Submit order button
+
+                document.querySelector('#submitBtn').disabled = !target.checked;
+            }
+
+            function submitOrder(){ // Submit order actions
+
+                var page = document.getElementById('restaurant-order-page');
+
+                var spinnerModal = document.querySelector('#spinner-modal');                
+                spinnerModal.show();
+
+                var orderData = {
+                    restaurantId: '1',
+                    restaurantName: 'The Gourmet Kitchen',
+                    customerName: page.querySelector('#fullName').value,
+                    customerEmail: page.querySelector('#customerEmail').value,
+                    customerAddress: page.querySelector('#customerAddress').value,
+                    customerOrder: document.querySelector('#check-1').checked,
+                    customerOrder: document.querySelector('#check-2').checked,
+                    customerOrder: document.querySelector('#check-3').checked,
+                    customerOrder: document.querySelector('#check-4').checked,
+                    customerOrder: document.querySelector('#check-5').checked,
+                    customerOrder: document.querySelector('#check-6').checked,
+                }
+
+                setTimeout(function() {
+                    spinnerModal.hide();
+
+                    var orderDialog = document.getElementById('order-confirm-dialog'); // Confirmation dialog
+              
+                    ons.createElement('order-confirm-temp', { append: true })
+                        .then(function(orderDialog) { // Relay order 
+
+                            orderDialog.querySelector('#confirm-restaurant').innerHTML = '<span class="dialog-em">' + orderData.restaurantName + '</span>';
+                            orderDialog.querySelector('#check-1') !== null;
+                            orderDialog.querySelector('#check-2') !== null;
+                            orderDialog.querySelector('#check-3') !== null;
+                            orderDialog.querySelector('#check-4') !== null;
+                            orderDialog.querySelector('#check-5') !== null;
+                            orderDialog.querySelector('#check-6') !== null;
+
+                            orderDialog.show();
+                        });
+                    
+                }, 2000);                
+                
+            }
+
+            function navToMain(){
+          
+                document.querySelector('#myNavigator').popPage({times: 2});
+                document.getElementById('order-confirm-dialog').hide();
+
+            }
+
+            function loadRestaurantsList(page){
+
+                var myrestaurantList = page.querySelector('#restaurant-list');
+
+                for(let i = 0; i < restaurantSet.length; i++){
+                    myrestaurantList.appendChild(
+                        ons.createElement(
+                            '<ons-list-item>' + 
+                            '<div class="restaurant-list-item">' + 
+                            '<div class="restaurant-list-left">' + 
+                            '<img class="restaurant-list-thumb" src="./img/restaurants/' + restaurantSet[i].keyImage + '">' +
+                            '</div>' +
+                            '<div class="restaurant-list-mid">' +
+                            '<div class="restaurant-list-heading">' + restaurantSet[i].name + '</div>' +
+                            '<div class="restaurant-list-subhead">' + restaurantSet[i].shortDesc + '</div>' + 
+                            '</div>' +
+                            '<div class="restaurant-list-right">' +
+                            '<ons-button onclick="pushRestaurantDetail(' + restaurantSet[i].id + ')" ' + (!restaurantSet[i].active ? 'disabled' : '') + ' icon="md-caret-right"></ons-button>' +
+                            '</div></div></ons-list-item>'
+                        )
+                    );
+                }
+
+            }
+
+            function loadRestaurantDetail(currPage){ // Load restaurant description
+
+                currPage.querySelector('.title').innerHTML = currPage.data.cRestaurant.name;
+
+                currPage.querySelector('#restaurantShortDesc').innerHTML = currPage.data.cRestaurant.shortDesc;
+
+                currPage.querySelector('#longRestaurantDesc').innerHTML = currPage.data.cRestaurant.longDesc;
+
+                 // Displays dietary list
+                var dietaryList = currPage.querySelector('#dietaryList');
+
+                for(let i=0; i<currPage.data.cRestaurant.dietaryList.length; i++){
+
+                    let tempItem = document.createElement('li');
+                    tempItem.appendChild(document.createTextNode(currPage.data.cRestaurant.dietaryList[i]));
+                    dietaryList.appendChild(tempItem);                        
+                }
+
+                // Restaurant carousel
+                var myCaro = currPage.querySelector('#restaurant-detail-carousel');                    
+                
+                for(let i = 0; i < currPage.data.cRestaurant.otherImage.length; i++){
+                    
+                    myCaro.appendChild(
+                        ons.createElement(
+                            '<ons-carousel-item>' + 
+                            '<img class="restaurant-caro-image" src="./img/restaurants/' + currPage.data.cRestaurant.otherImage[i] + '">' + 
+                            '</ons-carousel-item>')
+                    );
+                }                    
+                myCaro.refresh();                
+                    currPage.querySelector('#order-btn').onclick = function(event){
+                    pushRestaurantOrder(currPage.data.cRestaurant.id)
+                };
+
+            }
+
+            function loadRestaurantOrderData(currPage){
+                currPage.querySelector('.title').innerHTML = currPage.data.cRestaurant.name;
+            }
+
+        </script>
+    </body>
+</html>
+
+
+

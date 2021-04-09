@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, width=device-width, viewport-fit=cover"
+    />
+
+    <link rel="stylesheet" href="./lib/onsenui/css/onsenui.css" />
+    <link rel="stylesheet" href="./lib/onsenui/css/onsen-css-components.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./lib/onsenui/js/onsenui.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+  </head>
+  <body>
+    <ons-navigator id="myNavigator" page="first-template"></ons-navigator>
+
+    <!-- ******************** first page template ******************** -->
+    <template id="first-template">
+      <ons-page id="game-list-page">
+        <ons-toolbar>
+          <div class="left"><ons-back-button>Back</ons-back-button></div>
+          <div class="center">Streem</div>
+          <div class="right">
+            <ons-toolbar-button id="home-button">
+              <ons-icon icon="md-home"></ons-icon>
+            </ons-toolbar-button>
+          </div>
+        </ons-toolbar>
+
+        <!-- populated programatically -->
+        <ons-list modifier="inset" id="game-list"> </ons-list>
+        <ons-bottom-toolbar class="game-list-bottom-toolbar">
+          <ons-segment id="segment-filter" style="width: 275px">
+            <button>ALL</button>
+            <button>TV Shows</button>
+            <button>Movies</button>
+          </ons-segment>
+        </ons-bottom-toolbar>
+      </ons-page>
+    </template>
+
+    <!-- ******************** single game template ******************** -->
+    <template id="game-single-template">
+      <ons-page id="game-single-page">
+        <ons-toolbar>
+          <div class="left"><ons-back-button>Back</ons-back-button></div>
+        </ons-toolbar>
+
+        <div class="content content-container">
+          <img class="feat-img" id="feature-img" />
+
+          <h1 id="game-head"></h1>
+
+          <div>
+            Posted: <span id="post-date"></span> under
+            <span id="post-cat"></span>
+          </div>
+
+          <div id="post-body"></div>
+        </div>
+      </ons-page>
+    </template>
+
+    <!--  -->
+
+    <!-- ******************** spinner modal ******************** -->
+    <ons-modal id="spinner-modal">
+      <div style="margin: auto">
+        <ons-icon icon="md-spinner" size="100px" spin></ons-icon>
+      </div>
+    </ons-modal>
+
+    <!-- ******************** scripts ******************** -->
+    <script type="text/javascript" src="cordova.js"></script>
+
+    <script>
+      document.addEventListener("init", function (event) {
+        // get a reference to the element (page that fired the init event)
+        var page = event.target;
+
+        if (page.id === "first-page") {
+          document.querySelector("#home-button").onclick = function () {
+            window.location = "./index.html";
+          };
+        }
+
+        if (page.id === "game-list-page") {
+          // our filter change handler
+          document
+            .querySelector("#segment-filter")
+            .addEventListener("postchange", function (event) {
+              // indecies are: 0=ALL, 1=(THEORY), 2=(PRACTICAL)
+              switch (event.index) {
+                case 0:
+                  getGameList(null);
+                  break;
+                case 1:
+                  // for this specific site 6=theory
+                  getGameList(1);
+                  break;
+                case 2:
+                  // 10= practical
+                  getGameList(2);
+                  break;
+                case 3:
+                  // 10= practical
+                  getGameList(3);
+                  break;
+                default:
+                  getGameList(null);
+                  break;
+              }
+            });
+
+          getGameList(null);
+        }
+
+        if (page.id === "game-single-page") {
+          getGameSingle(page.data.slug);
+        }
+      });
+
+      function getGameList(filterVal) {
+        // prep filter by cat parameter
+        var catFilter = filterVal !== null ? "&categories=" + filterVal : "";
+
+        // show spinner
+        var spinnerModal = document.querySelector("#spinner-modal");
+        spinnerModal.show();
+
+        $.ajax(
+          "https://gameapi.aimeemasse.ca/wp-json/wp/v2/posts?_fields=title,slug,date,excerpt" +
+            catFilter
+        )
+          .done(function (result) {
+            // we then pass the result to populate the list
+            populateList(result);
+          })
+          .fail(function (xhr, status, error) {
+            console.log("error:" + xhr.status);
+            // NOTE: normally we'd add some error handlers here
+          })
+          .always(function () {
+            // done or fail we still hide the spinner
+            spinnerModal.hide();
+          });
+      }
+
+      function getGameSingle(slug) {
+        // show spinner
+        var spinnerModal = document.querySelector("#spinner-modal");
+        spinnerModal.show();
+
+        $.ajax(
+          "https://gameapi.aimeemasse.ca/wp-json/wp/v2/posts?_embed&slug=" +
+            slug
+        )
+          .done(function (result) {
+            // still returns as an array even though slug should yield a single post
+            setGameData(result[0]);
+          })
+          .fail(function (xhr, status, error) {
+            console.log("error:" + xhr.status);
+            // NOTE: normally we'd add some error handlers here
+          })
+          .always(function () {
+            // done or fail we still hide the spinner
+            spinnerModal.hide();
+          });
+      }
+
+      function pushListPage() {
+        document.querySelector("#myNavigator").pushPage("game-list-template");
+      }
+
+      function pushSinglePage(slug) {
+        document
+          .querySelector("#myNavigator")
+          .pushPage("game-single-template", { data: { slug: slug } });
+      }
+
+      function populateList(jsonData) {
+        var myGameList = document.getElementById("game-list");
+
+        // clear the list for the filter
+        myGameList.querySelectorAll("ons-list-item").forEach((n) => n.remove());
+
+        // since we aren't using lazy-list we can just add items and don't need use delegates
+        for (let i = 0; i < jsonData.length; i++) {
+          var postDate = new Date(jsonData[i].date);
+
+          myGameList.appendChild(
+            ons.createElement(
+              "<ons-list-item>" +
+                '<div class="game-list-item">' +
+                '<div class="game-list-left">' +
+                '<div class="game-list-heading">' +
+                jsonData[i].title.rendered +
+                "</div>" +
+                '<div class="game-list-sub">Posted:' +
+                postDate.toDateString() +
+                "</div>" +
+                '<div class="game-list-excerpt">' +
+                jsonData[i].excerpt.rendered +
+                "</div>" +
+                "</div>" +
+                '<div class="game-list-right">' +
+                "<ons-button onclick=\"pushSinglePage('" +
+                jsonData[i].slug +
+                '\')" icon="md-caret-right"></ons-button>' +
+                "</div></div></ons-list-item>"
+            )
+          );
+        }
+      }
+
+      function setGameData(game) {
+        var gamePage = document.getElementById("game-single-page");
+
+        // the feature image, also an array use index 0
+        gamePage.querySelector("#feature-img").src =
+          game._embedded[
+            "wp:featuredmedia"
+          ][0].media_details.sizes.medium.source_url;
+
+        // the title
+        gamePage.querySelector("#game-head").innerHTML = game.title.rendered;
+
+        // the date from the JSON is a string so we form a date object first
+        var postDate = new Date(game.date);
+        gamePage.querySelector(
+          "#post-date"
+        ).innerHTML = postDate.toDateString();
+
+        // terms are [0] categories and [1] tags
+        // there could be more than one and the order could change so in a practical example we'd loop and check the taxonomy
+        gamePage.querySelector("#post-cat").innerHTML =
+          game._embedded["wp:term"][0][0].name;
+
+        // the body of the post, in some frameworks the html would be stripped out
+        // note any images in the post would need to be added using an absolute path
+        gamePage.querySelector("#post-body").innerHTML = game.content.rendered;
+      }
+    </script>
+  </body>
+</html>
