@@ -1,7 +1,7 @@
 /********** INDEX PAGE CLASSES ********/
 
 .game-list-bottom-toolbar {
-  background: rgb(61, 61, 61);
+  background: rgb(27, 27, 27);
 }
 
 .game-list-bottom-toolbar button {
@@ -13,6 +13,11 @@
   min-height: 50px;
   padding-top: 10px;
   text-align: center;
+}
+
+.segment__button {
+  background-color: black;
+  border-radius: 0;
 }
 
 .content-item {
@@ -135,7 +140,7 @@ ons-carousel {
 
 .head-icon2 img {
   width: 100%;
-  padding: 10px 0px 5px 0px;
+  padding: 10px 0px 0px 0px;
   margin: auto;
 }
 
@@ -145,8 +150,22 @@ ons-carousel {
 
 .head-icon2 p {
   color: white;
+  padding: 0 0 1rem 0;
 }
 
 .page__background {
-  background-color: #051f2f;
+  background: rgb(0, 63, 88);
+  background: radial-gradient(
+    circle,
+    rgba(0, 63, 88, 1) 0%,
+    rgba(8, 36, 53, 1) 67%,
+    rgba(0, 27, 45, 1) 100%
+  );
+}
+.toolbar {
+  background-color: rgb(27, 27, 27);
+}
+
+.white {
+  color: white;
 }
