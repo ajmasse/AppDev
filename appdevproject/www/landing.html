@@ -62,10 +62,16 @@
 
           <div id="post-body"></div>
         </div>
+
+        <!-- Next Button -->
+        <ons-fab position="bottom right">
+          <ons-icon
+            icon="arrow-alt-circle-right"
+            onclick="nextButton()"
+          ></ons-icon>
+        </ons-fab>
       </ons-page>
     </template>
-
-    <!--  -->
 
     <!-- ******************** spinner modal ******************** -->
     <ons-modal id="spinner-modal">
@@ -73,6 +79,103 @@
         <ons-icon icon="md-spinner" size="100px" spin></ons-icon>
       </div>
     </ons-modal>
+
+    <template id="appointment-temp">
+      <ons-page id="appointment-page">
+        <ons-toolbar>
+          <div class="left">
+            <ons-back-button></ons-back-button>
+          </div>
+          <div class="center">Register to Watch</div>
+        </ons-toolbar>
+
+        <ons-card>
+          <div class="content">
+            <h2 class="section-break">Your Information</h2>
+
+            <div class="form-group">
+              <label for="fullName">Username</label>
+              <div>
+                <ons-input
+                  input-id="fullName"
+                  class="form-field-full"
+                  modifier="underbar"
+                  placeholder="Full Name"
+                ></ons-input>
+              </div>
+            </div>
+
+            <br />
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <div>
+                <ons-input
+                  input-id="fullName"
+                  class="form-field-full"
+                  modifier="underbar"
+                  placeholder="Full Name"
+                ></ons-input>
+              </div>
+            </div>
+
+            <br />
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <div>
+                <ons-input
+                  input-id="email"
+                  class="form-field-full"
+                  modifier="underbar"
+                  placeholder="Email"
+                ></ons-input>
+              </div>
+            </div>
+
+            <h2 class="section-break">Date of Birth</h2>
+
+            <div class="form-group">
+              <label for="arrDate">Please Enter Your Date of Birth</label>
+              <div>
+                <ons-input
+                  input-id="arrDate"
+                  type="date"
+                  class="form-field-full"
+                  modifier="underbar"
+                ></ons-input>
+              </div>
+            </div>
+          </div>
+        </ons-card>
+
+        <!-- Confirmed Button -->
+        <ons-fab position="bottom right">
+          <ons-icon
+            icon="check-circle"
+            onclick="submitAppointment()"
+          ></ons-icon>
+        </ons-fab>
+      </ons-page>
+    </template>
+
+    <!-- The Confirmed Dialog Message -->
+    <template id="appointment-confirm-temp">
+      <ons-dialog id="appointment-dialog">
+        <div style="text-align: center; padding: 20px">
+          <!-- Content -->
+          <h2>Confirmed</h2>
+
+          <p>
+            Thank you for registering with Ani-ME! Watch over a thousand anime
+            any where you go in the tip of your fingers!
+          </p>
+          <p>A confirmation email has been sent.</p>
+          <p>Enjoy!</p>
+
+          <!-- Close button and return -->
+          <p><ons-button onclick="closeReturn()">Close</ons-button></p>
+        </div>
+      </ons-dialog>
+    </template>
 
     <!-- ******************** scripts ******************** -->
     <script type="text/javascript" src="cordova.js"></script>
@@ -244,6 +347,33 @@
         // the body of the post, in some frameworks the html would be stripped out
         // note any images in the post would need to be added using an absolute path
         gamePage.querySelector("#post-body").innerHTML = game.content.rendered;
+      }
+
+      function nextButton(fIndex) {
+        var currCar = setGameData[Number.parseInt(fIndex)];
+
+        document
+          .querySelector("#myNavigator")
+          .pushPage("appointment-temp", { data: { cCar: currCar } });
+      }
+
+      // Check button function
+      function submitAppointment() {
+        var page = document.getElementById("appointment-page");
+
+        var appointmentDialog = document.getElementById("appointment-dialog");
+
+        ons
+          .createElement("appointment-confirm-temp", { append: true })
+          .then(function (appointmentDialog) {
+            appointmentDialog.show();
+          });
+      }
+
+      // Close and return button function
+      function closeReturn() {
+        document.querySelector("#myNavigator").popPage({ time: 2 });
+        document.getElementById("appointment-dialog").hide();
       }
     </script>
   </body>
